@@ -1,0 +1,28 @@
+{
+  "name": "sdc_products",
+  "version": "1.0.0",
+  "description": "\"micro-service for products\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CayenneCanyenne/SDC_PRODUCTS.git"
+  },
+  "keywords": [
+    "database",
+    "node",
+    "postgress"
+  ],
+  "author": "Peter Schaefferkoetter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CayenneCanyenne/SDC_PRODUCTS/issues"
+  },
+  "homepage": "https://github.com/CayenneCanyenne/SDC_PRODUCTS#readme",
+  "dependencies": {
+    "fast-csv": "^4.3.6",
+    "pg": "^8.7.3"
+  }
+}
