@@ -47,7 +47,7 @@ const styleTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.styles (
   id INTEGER PRIMARY KEY NOT NULL,
   productId INTEGER NOT NULL,
   name TEXT NOT NULL,
-  sale_price INTEGER,
+  sale_price DECIMAL NOT NULL,
   original_price INTEGER NOT NULL,
   default_style BOOL NOT NULL,
   FOREIGN KEY(productId) REFERENCES products(id)
@@ -65,16 +65,17 @@ const featureTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.features (
   id INTEGER PRIMARY KEY NOT NULL,
   product_id INTEGER NOT NULL,
   feature TEXT NOT NULL,
-  value TEXT NOT NULL,
+  value TEXT,
   FOREIGN KEY(product_id) REFERENCES products(id)
 )`;
 
 const skusTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.skus (
   id INTEGER PRIMARY KEY NOT NULL,
+  productId INTEGER NOT NULL,
   styleId INTEGER NOT NULL,
   size TEXT NOT NULL,
   quantity TEXT NOT NULL,
-  FOREIGN KEY(styleId) REFERENCES styles(id)
+  FOREIGN KEY(productId) REFERENCES products(id)
 )`;
 
 const relatedTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.related(

@@ -4,8 +4,8 @@
   "description": "\"micro-service for products\"",
   "main": "index.js",
   "scripts": {
-    "initializeDB": "node ./db/etl.js",
-    "test": "node ./server/db/index.js"
+    "initializeDB": "node ./server/db/etl.js",
+    "test": "nodemon ./server/index.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +39,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.4.0"
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "nodemon": "^2.0.15"
   }
 }
