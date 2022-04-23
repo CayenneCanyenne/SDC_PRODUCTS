@@ -1,15 +1,12 @@
 // dependencies
 const express = require('express');
-const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const products = require('./routes');
 
 const app = express();
 
 // middleware
-app.use(bodyParser.json());
-app.use(bodyParser.json());
-app.use(morgan('default'));
+app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
