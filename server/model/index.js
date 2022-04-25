@@ -57,11 +57,10 @@ module.exports = {
             ) c
           ) AS photos,
           (
-            SELECT (
-              skus.size, skus.quantity
-            ) AS skus
-            FROM public.skus
-            WHERE skus.id = styles.id
+            SELECT json_object_agg(skus.id,
+              json_build_object('quantity', skus.quantity, 'size', skus.size)) AS skus
+              FROM skus
+              WHERE skus.styleId = styles.id
           )
           FROM public.styles
           WHERE styles.productId = ${productId}
@@ -101,16 +100,4 @@ module.exports = {
   },
 };
 
-// const query = `SELECT
-// products.id,
-// styles.id, styles.original_price, styles.sale_price, styles.default_style,
-// photos.url, photos.thumbnail_url,
-// skus.size, skus.quantity
-// FROM public.products
-// INNER JOIN public.styles
-// ON public.products.id = public.styles.productId
-// AND public.products.id = 4
-// INNER JOIN public.photos
-// ON public.photos.styleid = public.styles.id
-// INNER JOIN public.skus
-// ON public.skus.styleid = public.styles.id`;
+//https://www.post
