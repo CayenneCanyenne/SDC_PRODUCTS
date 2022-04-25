@@ -57,9 +57,11 @@ module.exports = {
             ) c
           ) AS photos,
           (
-            SELECT skus.size
+            SELECT (
+              skus.size, skus.quantity
+            ) AS skus
             FROM public.skus
-            WHERE skus.id = 2
+            WHERE skus.id = styles.id
           )
           FROM public.styles
           WHERE styles.productId = ${productId}
@@ -72,7 +74,7 @@ module.exports = {
       .then((client) => client.query(query)
         .then((res) => {
           client.end();
-          return res;
+          return res.rows[0].row_to_json;
         })
         .catch((err) => new Error(err)));
   },
