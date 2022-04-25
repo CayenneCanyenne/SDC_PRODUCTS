@@ -22,4 +22,12 @@ module.exports = {
       })
       .catch(() => new Error('Error in getProductId at controller!'));
   },
+  getProductStyles(req, res) {
+    model.getProductStyles()
+      .then((data) => {
+        res.send(data);
+        res.end();
+      })
+      .catch(() => new Error('Error in getProductId at controller!'));
+  },
 };

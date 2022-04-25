@@ -3,7 +3,6 @@ const { pool } = require('../db');
 // will need to checkout a client for each request
 // reference to docs https://node-postgres.com/features/pooling
 
-
 module.exports = {
   getProducts(page = 1, count = 10) {
     const offset = count * (page - 1);
@@ -16,7 +15,7 @@ module.exports = {
         })
         .catch((err) => new Error('Error in getProducts!')));
   },
-  getProductId(productId = 1) {
+  getProductId(productId = 300) {
     // reference https://www.postgresql.org/docs/9.5/functions-json.html
     // great example here!: https://www.bigbinary.com/blog/generating-json-using-postgresql-json-function
     const query = `SELECT row_to_json(o)
@@ -33,6 +32,37 @@ module.exports = {
         FROM public.products
         WHERE products.id = ${productId}
      ) o`;
+    return pool.connect()
+      .then((client) => client.query(query)
+        .then((res) => {
+          client.end();
+          return res.rows[0].row_to_json;
+        })
+        .catch((err) => new Error(err)));
+  },
+  getProductStyles(productId = 200) {
+    const query = `SELECT row_to_json(a)
+    FROM (
+      SELECT id,
+      (
+        SELECT array_to_json(array_agg(b))
+        FROM (
+          SELECT id, name, original_price, sale_price, default_style,
+          (
+            SELECT array_to_json(array_agg(c))
+            FROM (
+              SELECT thumbnail_url, url
+              FROM public.photos
+              WHERE photos.styleId = styles.id
+            ) c
+          ) AS photos
+          FROM public.styles
+          WHERE productId = ${productId}
+        ) b
+      ) AS results
+      FROM public.products
+      WHERE products.id = ${productId}
+    ) a`;
     return pool.connect()
       .then((client) => client.query(query)
         .then((res) => {
