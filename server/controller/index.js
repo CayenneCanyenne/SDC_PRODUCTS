@@ -35,4 +35,12 @@ module.exports = {
       })
       .catch(() => new Error('Error in getProductId at controller!'));
   },
+  getRelated(req, res) {
+    model.getRelated()
+      .then((data) => {
+        res.send(data);
+        res.end();
+      })
+      .catch(() => new Error('Error in getProductId at controller!'));
+  },
 };
