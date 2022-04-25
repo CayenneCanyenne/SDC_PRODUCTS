@@ -71,11 +71,10 @@ const featureTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.features (
 
 const skusTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.skus (
   id INTEGER PRIMARY KEY NOT NULL,
-  productId INTEGER NOT NULL,
   styleId INTEGER NOT NULL,
   size TEXT NOT NULL,
   quantity TEXT NOT NULL,
-  FOREIGN KEY(productId) REFERENCES products(id)
+  FOREIGN KEY(styleId) REFERENCES styles(id)
 )`;
 
 const relatedTable = `CREATE TABLE IF NOT EXISTS ${schemaName}.related(

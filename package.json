@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CayenneCanyenne/SDC_PRODUCTS.git"
+    "url": "git+httpnpms://github.com/CayenneCanyenne/SDC_PRODUCTS.git"
   },
   "keywords": [
     "database",
