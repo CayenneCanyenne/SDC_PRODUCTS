@@ -59,7 +59,7 @@ module.exports = {
           (
             SELECT json_object_agg(skus.id,
               json_build_object('quantity', skus.quantity, 'size', skus.size)) AS skus
-              FROM skus
+              FROM public.skus
               WHERE skus.styleId = styles.id
           )
           FROM public.styles
@@ -77,7 +77,19 @@ module.exports = {
         })
         .catch((err) => new Error(err)));
   },
-  test(page = 1, count = 10) {
+  getRelated(productId = 1) {
+    const query = `SELECT related.related_product_id
+    FROM public.related
+    WHERE related.current_product_id = ${productId}`;
+    return pool.connect()
+      .then((client) => client.query(query)
+        .then((res) => {
+          client.end();
+          return res.rows;
+        })
+        .catch((err) => new Error(err)));
+  },
+  test() {
     const query = `SELECT
     products.id,
     styles.id, styles.original_price, styles.sale_price, styles.default_style,
@@ -99,5 +111,3 @@ module.exports = {
         .catch((err) => new Error(err)));
   },
 };
-
-//https://www.post
