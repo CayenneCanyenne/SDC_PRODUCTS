@@ -78,14 +78,14 @@ module.exports = {
         .catch((err) => new Error(err)));
   },
   getRelated(productId = 1) {
-    const query = `SELECT related.related_product_id
+    const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
     WHERE related.current_product_id = ${productId}`;
     return pool.connect()
       .then((client) => client.query(query)
         .then((res) => {
           client.end();
-          return res.rows;
+          return res.rows[0].array;
         })
         .catch((err) => new Error(err)));
   },
