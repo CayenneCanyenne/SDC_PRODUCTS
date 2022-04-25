@@ -1,0 +1,45 @@
+{
+  "name": "sdc_products",
+  "version": "1.0.0",
+  "description": "\"micro-service for products\"",
+  "main": "index.js",
+  "scripts": {
+    "initializeDB": "node ./server/db/etl.js",
+    "test": "nodemon ./server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+httpnpms://github.com/CayenneCanyenne/SDC_PRODUCTS.git"
+  },
+  "keywords": [
+    "database",
+    "node",
+    "postgress"
+  ],
+  "author": "Peter Schaefferkoetter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CayenneCanyenne/SDC_PRODUCTS/issues"
+  },
+  "homepage": "https://github.com/CayenneCanyenne/SDC_PRODUCTS#readme",
+  "dependencies": {
+    "body-parser": "^1.20.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "fast-csv": "^4.3.6",
+    "mongoose": "^6.3.0",
+    "morgan": "^1.10.0",
+    "node": "^17.7.2",
+    "pg": "^8.7.3",
+    "pgtools": "^0.3.2"
+  },
+  "devDependencies": {
+    "eslint": "^8.13.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-react": "^7.29.4",
+    "eslint-plugin-react-hooks": "^4.4.0",
+    "nodemon": "^2.0.15"
+  }
+}
