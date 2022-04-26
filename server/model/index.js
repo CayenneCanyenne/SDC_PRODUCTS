@@ -4,7 +4,7 @@ const { pool } = require('../db');
 // reference to docs https://node-postgres.com/features/pooling
 
 module.exports = {
-  getProducts(page = 1, count = 10) {
+  getProducts(page = 1, count = 5) {
     const offset = count * (page - 1);
     const query = `SELECT * FROM public.products LIMIT ${count} OFFSET ${offset}`;
     return pool.connect()
@@ -15,7 +15,7 @@ module.exports = {
         })
         .catch((err) => new Error('Error in getProducts!')));
   },
-  getProductId(productId = 300) {
+  getProductId(productId) {
     // reference https://www.postgresql.org/docs/9.5/functions-json.html
     // great example here!: https://www.bigbinary.com/blog/generating-json-using-postgresql-json-function
     const query = `SELECT row_to_json(o)
@@ -40,7 +40,7 @@ module.exports = {
         })
         .catch((err) => new Error(err)));
   },
-  getProductStyles(productId = 200) {
+  getProductStyles(productId) {
     const query = `SELECT row_to_json(a)
     FROM (
       SELECT id,
@@ -77,7 +77,7 @@ module.exports = {
         })
         .catch((err) => new Error(err)));
   },
-  getRelated(productId = 1) {
+  getRelated(productId) {
     const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
     WHERE related.current_product_id = ${productId}`;
