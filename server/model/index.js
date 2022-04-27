@@ -6,9 +6,9 @@ const { pool } = require('../db');
 module.exports = {
   getProducts(page = 1, count = 5) {
     const offset = count * (page - 1);
-    const query = `SELECT * FROM public.products LIMIT ${count} OFFSET ${offset}`;
+    const query = 'SELECT * FROM public.products LIMIT $1 OFFSET $2';
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [count, offset])
         .then((res) => {
           client.end();
           return res.rows;
@@ -26,14 +26,14 @@ module.exports = {
             FROM (
               SELECT feature, value
               FROM public.features
-              WHERE product_id = ${productId}
+              WHERE product_id = $1
             ) a
           ) as features
         FROM public.products
-        WHERE products.id = ${productId}
+        WHERE products.id = $1
      ) o`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].row_to_json;
@@ -63,14 +63,14 @@ module.exports = {
               WHERE skus.styleId = styles.id
           )
           FROM public.styles
-          WHERE styles.productId = ${productId}
+          WHERE styles.productId = $1
         ) b
       ) AS results
       FROM public.products
-      WHERE products.id = ${productId}
+      WHERE products.id = $1
     ) a`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].row_to_json;
@@ -80,9 +80,9 @@ module.exports = {
   getRelated(productId) {
     const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
-    WHERE related.current_product_id = ${productId}`;
+    WHERE related.current_product_id = $1`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].array;
@@ -90,18 +90,7 @@ module.exports = {
         .catch((err) => new Error(err)));
   },
   test() {
-    const query = `SELECT
-    products.id,
-    styles.id, styles.original_price, styles.sale_price, styles.default_style,
-    photos.url, photos.thumbnail_url
-    FROM public.products
-    INNER JOIN public.styles
-    ON public.products.id = public.styles.productId
-    AND public.products.id = 4
-    INNER JOIN public.photos
-    ON public.photos.styleid = public.styles.id
-    INNER JOIN public.skus
-    ON public.skus.styleid = public.styles.id`;
+    const query = 'test';
     return pool.connect()
       .then((client) => client.query(query)
         .then((res) => {
