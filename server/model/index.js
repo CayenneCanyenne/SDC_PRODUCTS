@@ -90,18 +90,7 @@ module.exports = {
         .catch((err) => new Error(err)));
   },
   test() {
-    const query = `SELECT
-    products.id,
-    styles.id, styles.original_price, styles.sale_price, styles.default_style,
-    photos.url, photos.thumbnail_url
-    FROM public.products
-    INNER JOIN public.styles
-    ON public.products.id = public.styles.productId
-    AND public.products.id = 4
-    INNER JOIN public.photos
-    ON public.photos.styleid = public.styles.id
-    INNER JOIN public.skus
-    ON public.skus.styleid = public.styles.id`;
+    const query = 'test';
     return pool.connect()
       .then((client) => client.query(query)
         .then((res) => {
