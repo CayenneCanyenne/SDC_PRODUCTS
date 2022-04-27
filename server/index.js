@@ -14,9 +14,9 @@ app.use(express.json());
 app.use(products);
 
 // create a route for serverio
-const loaderIoUrl = 'http://54.193.77.39:3001/loaderio-3a29069b26f647aa5accd4f94aa0935e.html';
+const loaderIoUrl = '/loaderio-3a29069b26f647aa5accd4f94aa0935e';
 app.get(loaderIoUrl, (req, res) => {
-  const file = '../loaderio-3a29069b26f647aa5accd4f94aa0935e.txt';
+  const file = '/home/ubuntu/SDC_PRODUCTS/loaderio-3a29069b26f647aa5accd4f94aa0935e.txt';
   res.sendFile(file);
 });
 
