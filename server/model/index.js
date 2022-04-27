@@ -26,14 +26,14 @@ module.exports = {
             FROM (
               SELECT feature, value
               FROM public.features
-              WHERE product_id = ${productId}
+              WHERE product_id = $1
             ) a
           ) as features
         FROM public.products
-        WHERE products.id = ${productId}
+        WHERE products.id = $1
      ) o`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].row_to_json;
