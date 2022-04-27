@@ -63,14 +63,14 @@ module.exports = {
               WHERE skus.styleId = styles.id
           )
           FROM public.styles
-          WHERE styles.productId = ${productId}
+          WHERE styles.productId = $1
         ) b
       ) AS results
       FROM public.products
-      WHERE products.id = ${productId}
+      WHERE products.id = $1
     ) a`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].row_to_json;
@@ -80,9 +80,9 @@ module.exports = {
   getRelated(productId) {
     const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
-    WHERE related.current_product_id = ${productId}`;
+    WHERE related.current_product_id = $1`;
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [productId])
         .then((res) => {
           client.end();
           return res.rows[0].array;
