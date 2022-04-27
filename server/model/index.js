@@ -6,9 +6,9 @@ const { pool } = require('../db');
 module.exports = {
   getProducts(page = 1, count = 5) {
     const offset = count * (page - 1);
-    const query = `SELECT * FROM public.products LIMIT ${count} OFFSET ${offset}`;
+    const query = 'SELECT * FROM public.products LIMIT $1 OFFSET $2';
     return pool.connect()
-      .then((client) => client.query(query)
+      .then((client) => client.query(query, [count, offset])
         .then((res) => {
           client.end();
           return res.rows;
