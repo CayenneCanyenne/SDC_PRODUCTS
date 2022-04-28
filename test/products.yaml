@@ -1,0 +1,19 @@
+# example yaml file from: https://www.artillery.io/docs/guides/getting-started/writing-your-first-test
+# another useful reference to generate a random number: https://stackoverflow.com/questions/48096569/how-to-create-random-string-or-number-in-artillery-load-testing-script
+
+config:
+  target: "http://127.0.0.1:3001"
+  phases:
+    - duration: 10
+      arrivalRate: 1
+      name: Warm up
+    - duration: 120
+      arrivalRate: 10
+      name: Sustained load
+
+# get a product http://127.0.0.1:3001/products?count=2&page=5
+scenarios:
+  - name: "Products"
+    flow:
+      - get:
+          url: "/products?count=100&page=50"
