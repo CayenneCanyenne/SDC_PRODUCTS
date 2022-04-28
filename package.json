@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "initializeDB": "node ./server/db/etl.js",
-    "test": "nodemon ./server/index.js"
+    "test": "nodemon ./server/index.js",
+    "start": "node ./server/index.js"
   },
   "repository": {
     "type": "git",

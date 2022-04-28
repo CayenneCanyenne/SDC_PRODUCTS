@@ -1,12 +1,12 @@
 // dependencies
 const express = require('express');
-const morgan = require('morgan');
+//const morgan = require('morgan');
 const products = require('./routes');
 
 const app = express();
 
 // middleware
-app.use(morgan('dev'));
+//app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 

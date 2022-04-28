@@ -7,13 +7,9 @@ module.exports = {
   getProducts(page = 1, count = 5) {
     const offset = count * (page - 1);
     const query = 'SELECT * FROM public.products LIMIT $1 OFFSET $2';
-    return pool.connect()
-      .then((client) => client.query(query, [count, offset])
-        .then((res) => {
-          client.end();
-          return res.rows;
-        })
-        .catch(() => new Error('Error in getProducts!')));
+    return pool.query(query, [count, offset])
+      .then((res) => res.rows)
+      .catch(() => new Error('Error in getProducts!'));
   },
   getProductId(productId) {
     // reference https://www.postgresql.org/docs/9.5/functions-json.html
@@ -32,13 +28,9 @@ module.exports = {
         FROM public.products
         WHERE products.id = $1
      ) o`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].row_to_json;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].row_to_json)
+      .catch((err) => new Error(err));
   },
   getProductStyles(productId) {
     const query = `SELECT row_to_json(a)
@@ -69,25 +61,17 @@ module.exports = {
       FROM public.products
       WHERE products.id = $1
     ) a`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].row_to_json;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].row_to_json)
+      .catch((err) => new Error(err));
   },
   getRelated(productId) {
     const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
     WHERE related.current_product_id = $1`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].array;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].array)
+      .catch((err) => new Error(err));
   },
   test() {
     const query = 'test';
