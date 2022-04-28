@@ -2,19 +2,11 @@ const model = require('../model');
 
 module.exports = {
   test(req, res) {
-    model.test()
-      .then((data) => {
-        console.log('here is the data!', data);
-        res.send(data);
-        res.end();
-      })
-      .catch(() => new Error('Error in test at controller!'));
+    res.send('Success in TEST Model!').send(200);
   },
   getProducts(req, res) {
-    console.log(req);
     model.getProducts(req.query.page, req.query.count)
       .then((data) => {
-        console.log('here is the data!', data);
         res.send(data);
         res.end();
       })

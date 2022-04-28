@@ -13,7 +13,7 @@ module.exports = {
           client.end();
           return res.rows;
         })
-        .catch((err) => new Error('Error in getProducts!')));
+        .catch(() => new Error('Error in getProducts!')));
   },
   getProductId(productId) {
     // reference https://www.postgresql.org/docs/9.5/functions-json.html
