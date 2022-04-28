@@ -61,25 +61,17 @@ module.exports = {
       FROM public.products
       WHERE products.id = $1
     ) a`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].row_to_json;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].row_to_json)
+      .catch((err) => new Error(err));
   },
   getRelated(productId) {
     const query = `SELECT array_agg(related.related_product_id) AS array
     FROM public.related
     WHERE related.current_product_id = $1`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].array;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].array)
+      .catch((err) => new Error(err));
   },
   test() {
     const query = 'test';
