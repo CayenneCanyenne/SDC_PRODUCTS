@@ -28,13 +28,9 @@ module.exports = {
         FROM public.products
         WHERE products.id = $1
      ) o`;
-    return pool.connect()
-      .then((client) => client.query(query, [productId])
-        .then((res) => {
-          client.end();
-          return res.rows[0].row_to_json;
-        })
-        .catch((err) => new Error(err)));
+    return pool.query(query, [productId])
+      .then((res) => res.rows[0].row_to_json)
+      .catch((err) => new Error(err));
   },
   getProductStyles(productId) {
     const query = `SELECT row_to_json(a)
