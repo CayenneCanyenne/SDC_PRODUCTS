@@ -33,15 +33,14 @@ module.exports = {
       .catch((err) => new Error(err));
   },
   getProductStyles(productId) {
-    const query = `SELECT row_to_json(a)
-    FROM (
-      SELECT id,
+    const query = `
+      SELECT id AS product_id,
       (
-        SELECT array_to_json(array_agg(b))
+        SELECT json_agg(b)
         FROM (
           SELECT id, name, original_price, sale_price, default_style,
           (
-            SELECT array_to_json(array_agg(c))
+            SELECT json_agg(c)
             FROM (
               SELECT thumbnail_url, url
               FROM public.photos
@@ -60,9 +59,9 @@ module.exports = {
       ) AS results
       FROM public.products
       WHERE products.id = $1
-    ) a`;
+    `;
     return pool.query(query, [productId])
-      .then((res) => res.rows[0].row_to_json)
+      .then((res) => res.rows[0])
       .catch((err) => new Error(err));
   },
   getRelated(productId) {

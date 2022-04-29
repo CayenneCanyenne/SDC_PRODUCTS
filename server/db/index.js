@@ -10,8 +10,7 @@ const pool = new Pool({
   host: HOST,
   port: DBPORT,
   database: DBNAME,
-  max: '10000',
-  idleTimeoutMillis: '2000',
+  max: '5000',
 
 });
 
