@@ -5,10 +5,10 @@ config:
   target: "http://127.0.0.1:3001"
   phases:
     - duration: 10
-      arrivalRate: 1
+      arrivalRate: 100
       name: Warm up
-    - duration: 120
-      arrivalRate: 10
+    - duration: 60
+      arrivalRate: 500
       name: Sustained load
 
 # get a product http://127.0.0.1:3001/products?count=2&page=5
@@ -16,4 +16,4 @@ scenarios:
   - name: "Products"
     flow:
       - get:
-          url: "/products?count=100&page=50"
+          url: "/products/{{$randomNumber(1,1000)}}"
