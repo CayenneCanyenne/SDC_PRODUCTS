@@ -10,7 +10,7 @@
 - [nginx](https://www.nginx.com/)
 
 ## Overview
-A micro-service developed to update an existing API to meet web-scale traffic needs
+A micro-service developed to update an existing API for web-scale traffic damand
 
 ## API Design and Implemenation
 -	Database Selection: provided dataset was relational and suitable for an RBDMS and selected the open-source option PostgreSQL with consideration to cost and reliability
@@ -19,8 +19,8 @@ A micro-service developed to update an existing API to meet web-scale traffic ne
 -	Optimization: identify and aleviate local and server related bottlenecks (see below)
 
 ## Optimization - A Phased Approach
-- pre-depolyment: conduct performance test local with artillery.io refactor database queries and index (B-tree) field values shared between tables
-- deployment: deployed three servers and load balance with nginx
+- Pre-depolyment: conduct performance test local with artillery.io refactor database queries and index (B-tree) field values shared between tables
+- Deployment: deployed servers on AWS EC2 and load balance with nginx
 
 ## Results
 
